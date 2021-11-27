@@ -1,2 +1,6 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+    import NavigationBar from "../components/NavigationBar.svelte";
+</script>
+<NavigationBar></NavigationBar>
+
+<p>Welcome to Quiz Maker</p>
