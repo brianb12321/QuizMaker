@@ -5,5 +5,6 @@ export class MultipleChoiceQuestion extends QuestionItem {
 
     constructor(questionId, questionName) {
         super(questionId, "multipleChoice", questionName);
+        this.questionOptions = [];
     }
 }

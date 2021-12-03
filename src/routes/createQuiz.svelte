@@ -17,25 +17,6 @@
     }
 </script>
 
-<style>
-    .formfield {
-        display: table;
-        width: 100%;
-        padding-bottom: 25px;
-    }
-    .formfield label,
-    .formfield .input-wrapper {
-        display: table-cell;
-        vertical-align: top;
-    }
-    .formfield label {
-        width: 100px;
-    }
-    .formfield .input-wrapper .table-form {
-        width: 100%;
-    }
-</style>
-
 <h1>Create Quiz</h1>
 
 <form>
