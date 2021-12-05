@@ -18,12 +18,18 @@
     header {
         display: flex;
         background-color: rgb(216, 207, 207);
-        widows: 100%;
+        width: 100%;
         height: 40px;
+        height: auto;
+        overflow: auto;
+    }
+    .header-main {
+        display: flex;
+        width: 100%;    
     }
     .header-questionTypeTitle {
         margin-left: 10px;
-        width: 70px;
+        width: 75px;
     }
     
     .header-questionLegend {
@@ -38,6 +44,7 @@
         width: 50%;
         margin-top: 10px;
         margin-bottom: 10px;
+        overflow-x: scroll;
     }
     .header-title {
         height: 100%;
@@ -48,12 +55,12 @@
     }
     .header-grade p {
         height: 100%;
-        vertical-align:middle;
+        vertical-align: middle;
         line-height: 40px;
     }
     
     h2 {
-        vertical-align:middle;
+        vertical-align: middle;
         line-height: 40px;
     }
 
@@ -69,28 +76,39 @@
         margin: 10px;
         background-color: antiquewhite;
     }
+
+    @media screen and (max-width: 692px) {
+        header {
+            flex-direction: column;  
+        }
+        .header-edit {
+            width: 100%;
+        }
+    }
 </style>
 
 <div class="quiz-frame">
     <header>
-        <div class="header-questionLegend legend-{questionType}"></div>
-        <p class="header-questionTypeTitle">{questionTypeTitle}</p>
-        <div class="header-title">
-            <h2>{questionItem.questionName}</h2>
-        </div>
-        <div class="header-grade">
-            <p>
-                {#if mode === "review"}
-                {feedback.earnedMarks}
-                {:else}
-                __
-                {/if}
-                 / {questionItem.totalPoints}
-            </p>
+        <div class="header-main">
+            <div class="header-questionLegend legend-{questionType}"></div>
+            <p class="header-questionTypeTitle">{questionTypeTitle}</p>
+            <div class="header-title">
+                <h2>{questionItem.questionName}</h2>
+            </div>
+            <div class="header-grade">
+                <p>
+                    {#if mode === "review"}
+                    {feedback.earnedMarks}
+                    {:else}
+                    __
+                    {/if}
+                     / {questionItem.totalPoints}
+                </p>
+            </div>
         </div>
         {#if mode === "edit"}
             <div class="header-edit">
-                <Button cssClass="green height-100pct" on:click="{forwardEditQuestionItemClicked}">Edit</Button>
+                <Button cssClass="green height-100pct width-100pct" on:click="{forwardEditQuestionItemClicked}">Edit</Button>
             </div>
         {/if}
     </header>

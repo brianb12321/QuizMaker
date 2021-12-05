@@ -5,41 +5,51 @@
     export let questionItem;
     export let mode = "quiz";
     export let gradeFeedback;
+    let disabled;
     let selectedOption;
 
     let editQuestionItemClicked = createEventDispatcher();
 
-    questionItem.readSession = (session, state) => {
-        if(state != undefined) {
-            selectedOption = questionItem.questionOptions.find(option => option.optionId == state.selectedOptionId);   
-        }
-        if(state.gradeFeedback != undefined) {
-            gradeFeedback = state.gradeFeedback;
+    if(mode != "edit" || mode != "readOnly") {
+        questionItem.readSession = (session, state) => {
+            if(state != undefined) {
+                selectedOption = questionItem.questionOptions.find(option => option.optionId == state.selectedOptionId);   
+                if(state.gradeFeedback != undefined) {
+                    gradeFeedback = state.gradeFeedback;
+                    mode = "review";
+                    disabled = true;
+                }
+            }
+        };
+        questionItem.writeToSession = (state) => {
+            if(selectedOption != undefined) {
+                state.selectedOptionId = selectedOption.optionId;
+            }
+            if(gradeFeedback != undefined) {
+                state.gradeFeedback = gradeFeedback;
+            }
+        };
+        questionItem.grade = () => {
+            let totalPercentage = 0;
+            if(selectedOption == undefined) {
+                totalPercentage = 0;
+            }
+            else {
+                totalPercentage += selectedOption.percentageValue;
+            }
+            let pointsEarned = totalPercentage * questionItem.totalPoints;
+            const feedback = new QuestionFeedback(pointsEarned);
+            if(pointsEarned == questionItem.totalPoints) {
+                feedback.feedbackBody = "<p>Question correct!</p>";
+            }
+            else {
+                feedback.feedbackBody = "<p>Question incorrect!</p>";
+            }
+            gradeFeedback = feedback;
             mode = "review";
-        }
-    };
-    questionItem.writeToSession = (state) => {
-        state.selectedOptionId = selectedOption.optionId;
-        if(gradeFeedback != undefined) {
-            state.gradeFeedback = gradeFeedback;
-        }
-    };
-    questionItem.grade = () => {
-        console.log(selectedOption);
-        let totalPercentage = 0;
-        totalPercentage += selectedOption.percentageValue;
-        let pointsEarned = totalPercentage * questionItem.totalPoints;
-        const feedback = new QuestionFeedback(pointsEarned);
-        if(pointsEarned == questionItem.totalPoints) {
-            feedback.feedbackBody = "<p>Question correct!</p>";
-        }
-        else {
-            feedback.feedbackBody = "<p>Question incorrect!</p>";
-        }
-        gradeFeedback = feedback;
-        mode = "review";
-        return feedback;
-    };
+            return feedback;
+        };
+    }
     function forwardEditQuestionItemClicked() {
         editQuestionItemClicked("editQuestionItemClicked", questionItem);
     }
@@ -62,7 +72,7 @@
     <div>
         {#each questionItem.questionOptions as option}
             <label for="{option.optionId}">
-                <input id="{option.optionId}" type="radio" name="{questionItem.questionId}" value="{option}" bind:group="{selectedOption}">
+                <input id="{option.optionId}" type="radio" name="{questionItem.questionId}" value="{option}" bind:group="{selectedOption}" {disabled}>
                 {@html option.bodyText}
             </label>
         {/each}

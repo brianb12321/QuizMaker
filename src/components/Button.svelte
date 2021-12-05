@@ -24,6 +24,9 @@
     .height-100pct {
         height: 100%;
     }
+    .width-100pct {
+        width: 100%;
+    }
 </style>
 {#if link != ""}
 <a href={link}>

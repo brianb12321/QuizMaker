@@ -9,6 +9,10 @@
     import {goto} from "$app/navigation";
 
     let quizSession = $quizSessions.find(session => session.sessionId == $page.params.slug);
+
+    quizSessions.subscribe(sessions => {
+        sessionStorage.setItem("quizSessions", JSON.stringify(sessions));
+    });
     let quiz = getQuiz(quizSession.quizId);
     let questionItems = [];
     let gradeReport;
@@ -17,12 +21,17 @@
             questionStates: [],
             gradeReport: undefined
         };
+        for(let questionItem of quiz.questionItems) {
+            //Create session data and write to it.
+            quizSession.state.questionStates.push({
+                questionId: questionItem.questionId
+            })
+        }
+    }
+    if(quizSession.state.gradeReport != undefined) {
+        gradeReport = quizSession.state.gradeReport;
     }
     for(let questionItem of quiz.questionItems) {
-        //Create session data and write to it.
-        quizSession.state.questionStates.push({
-            questionId: questionItem.questionId
-        })
         switch(questionItem.questionType) {
             case "multipleChoice":
                 questionItems.push({
@@ -44,23 +53,31 @@
         console.log(gradeReport);
         alert("Quiz Graded");
     }
-    function exitQuiz() {
-        if(confirm("Are you sure you want to exit the quiz?")) {
+    function exitAndDestroySession() {
+        if(confirm("Are you sure you want to exit the quiz? Your session will finished.")) {
+            quizSessions.update(sessions => {
+                const index = sessions.findIndex(session => session.sessionId == quizSession.sessionId);
+                sessions.splice(index, 1);
+                return sessions;
+            })
             goto("/quizSummary/" + quiz.quizId);
         }
-
-        //Save session
-        for(let questionItem of quiz.questionItems) {
+    }
+    function exitQuiz() {
+        if(confirm("Are you sure you want to exit the quiz?")) {
+            // //Save session
             if(gradeReport != undefined) {
-                quizSession.state.gradeReport = gradeReport;
+                    quizSession.state.gradeReport = gradeReport;
             }
-
-            questionItem.writeToSession(quizSession.state.questionStates.find(state => state.questionId == questionItem.questionId));
+            for(let questionItem of quiz.questionItems) {
+                questionItem.writeToSession(quizSession.state.questionStates.find(state => state.questionId == questionItem.questionId));
+            }
             quizSessions.update(sessions => {
-                let sessionIndex = sessions.findIndex(session => session.quizId == quiz.quizId);
-                sessions[sessionIndex] = quizSession;
-                return sessions;
+                    let sessionIndex = sessions.findIndex(session => session.quizId == quiz.quizId);
+                    sessions[sessionIndex] = quizSession;
+                    return sessions;
             });
+            goto("/quizSummary/" + quiz.quizId);
         }
     }
 </script>
@@ -83,5 +100,9 @@
 {/each}
 
 <div>
-    <Button cssClass="green" on:click="{submitQuiz}">Submit Quiz</Button>
+    {#if gradeReport == undefined}
+        <Button cssClass="green" on:click="{submitQuiz}">Submit Quiz</Button>
+    {:else}
+        <Button cssClass="green" on:click="{exitAndDestroySession}">Exit and Finish</Button>
+    {/if}
 </div>

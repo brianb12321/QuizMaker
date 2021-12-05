@@ -27,6 +27,11 @@
         border: 1px solid black;
         display: flex;
     }
+    p {
+        height: 100%;
+        margin-right: 10px;
+        line-height: 40px;
+    }
 </style>
 
 <nav>
