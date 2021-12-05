@@ -1,7 +1,11 @@
 import { readable, writable } from "svelte/store";
 import { browser } from "$app/env";
-import { Quiz } from "..//Quiz";
+import {Quiz} from "../Quiz";
 
+function ignoreFeedbackInformation(key, value) {
+    if(key == "feedback") return undefined;
+    return value;
+}
 
 export function saveQuiz(quiz) {
     if(browser) {
@@ -9,7 +13,7 @@ export function saveQuiz(quiz) {
         const index = quizzes.findIndex(q => q.quizId == quiz.quizId);
         if(index != -1) {
             quizzes[index] = quiz;
-            window.localStorage.setItem("quizzes", JSON.stringify(quizzes));
+            window.localStorage.setItem("quizzes", JSON.stringify(quizzes, ignoreFeedbackInformation));
             return true;
         }
     }
@@ -18,7 +22,8 @@ export function saveQuiz(quiz) {
 export function getQuiz(quizGuid) {
     if(browser) {
         const quizzes = JSON.parse(window.localStorage.getItem("quizzes"));
-        return quizzes.find(quiz => quiz.quizId == quizGuid);
+        const quiz = quizzes.find(quiz => quiz.quizId == quizGuid);
+        return new Quiz(quiz.quizId, quiz.name, quiz.description, quiz.questionItems);
     }
     return null;
 }
@@ -26,7 +31,7 @@ export function addQuiz(quiz) {
     if(browser) {
         const quizzes = JSON.parse(window.localStorage.getItem("quizzes")) ?? [];
         quizzes.push(quiz);
-        window.localStorage.setItem("quizzes", JSON.stringify(quizzes));
+        window.localStorage.setItem("quizzes", JSON.stringify(quizzes, ignoreFeedbackInformation));
         return true;
     }
     return false;

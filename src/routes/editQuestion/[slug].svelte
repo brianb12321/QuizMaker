@@ -4,6 +4,7 @@
     import {workingQuiz} from "../../stores/quizStores";
     import {page} from "$app/stores";
     import Button from "../../components/Button.svelte";
+    import {v4 as uuid} from "uuid";
     import Editor from "@tinymce/tinymce-svelte";
     import MultipleChoiceOption from "../../components/editQuizComponents/MultipleChoiceOption.svelte";
     import {MultipleChoiceQuestionOption} from "../../questionTypes/MutlipleChoiceQuestionOption";
@@ -15,7 +16,7 @@
 
     let editorConf = {
         height: 400,
-        plugins: 'paste',
+        plugins: "paste image",
         paste_data_images: true
     };
 
@@ -28,8 +29,7 @@
         }
     }
     function addOptionClicked() {
-        const option = new MultipleChoiceQuestionOption();
-        questionItem.questionOptions.push(option);
+        const option = new MultipleChoiceQuestionOption(uuid());
         choices.update(array => {
             array.push(option);
             return array;
@@ -44,6 +44,12 @@
         <label for="questionName">Question Name</label>
         <div class="input-wrapper">
           <input id="questionName" class="table-form" bind:value="{questionItem.questionName}"/>
+        </div>
+    </div>
+    <div class="formfield">
+        <label for="totalPoints">Total points</label>
+        <div class="input-wrapper">
+          <input type="number" id="totalPoints" class="table-form" bind:value="{questionItem.totalPoints}"/>
         </div>
     </div>
     <div class="formfield">

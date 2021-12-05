@@ -21,7 +21,7 @@
     </tr>
     {#each quizzesToDisplay as quiz}
         <tr>
-            <td>{quiz.name}</td>
+            <td><a href="/quizSummary/{quiz.quizId}">{quiz.name}</a></td>
             <td><a href="/editQuiz/{quiz.quizId}">Edit</a></td>
         </tr>
     {/each}

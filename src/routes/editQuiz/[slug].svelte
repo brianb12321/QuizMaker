@@ -46,12 +46,13 @@
         goto("/editQuestion/" + event.detail.questionId);
     }
 </script>
-<QuizNavigationBar {quiz} on:saveButtonClicked="{saveButtonClicked}" on:quizItemSelected="{quizItemAdded}"></QuizNavigationBar>
+
+<QuizNavigationBar {quiz} on:saveButtonClicked="{saveButtonClicked}" on:quizItemSelected="{quizItemAdded}" editMode="true"></QuizNavigationBar>
 {#each $questionItems as questionItem}
     <svelte:component
         this={questionItem.component}
         questionItem={questionItem.questionItem}
         on:editQuestionItemClicked={editQuizItemClicked}
-        editMode="true"
+        mode="edit"
     ></svelte:component>
 {/each}

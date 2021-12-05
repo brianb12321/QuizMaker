@@ -4,9 +4,10 @@
 
     export let questionType = "multipleChoice";
     export let questionTypeTitle = "";
-    export let title = "";
-    export let editMode = false;
+    export let questionItem;
+    export let mode;
     export let editQuestionItemClicked = createEventDispatcher();
+    export let feedback;
 
     function forwardEditQuestionItemClicked() {
         editQuestionItemClicked("editQuestionItemClicked");
@@ -22,6 +23,7 @@
     }
     .header-questionTypeTitle {
         margin-left: 10px;
+        width: 70px;
     }
     
     .header-questionLegend {
@@ -39,7 +41,15 @@
     }
     .header-title {
         height: 100%;
-        width: 90%;
+        width: 100%;
+    }
+    .header-grade {
+        width: 60px;
+    }
+    .header-grade p {
+        height: 100%;
+        vertical-align:middle;
+        line-height: 40px;
     }
     
     h2 {
@@ -50,6 +60,15 @@
     .legend-multipleChoice {
         background-color: orange;
     }
+
+    .main {
+        margin: 10px;
+    }
+
+    .feedback {
+        margin: 10px;
+        background-color: antiquewhite;
+    }
 </style>
 
 <div class="quiz-frame">
@@ -57,23 +76,30 @@
         <div class="header-questionLegend legend-{questionType}"></div>
         <p class="header-questionTypeTitle">{questionTypeTitle}</p>
         <div class="header-title">
-            <h2>{title}</h2>
+            <h2>{questionItem.questionName}</h2>
         </div>
         <div class="header-grade">
-            {#if editMode}
-            <label>
-                Possible Points
-                <input class="input-pointsPossible" type="number">
-            </label>
-            {/if}
+            <p>
+                {#if mode === "review"}
+                {feedback.earnedMarks}
+                {:else}
+                __
+                {/if}
+                 / {questionItem.totalPoints}
+            </p>
         </div>
-        {#if editMode}
-        <div class="header-edit">
-            <Button cssClass="green height-100pct" on:click="{forwardEditQuestionItemClicked}">Edit</Button>
-        </div>
+        {#if mode === "edit"}
+            <div class="header-edit">
+                <Button cssClass="green height-100pct" on:click="{forwardEditQuestionItemClicked}">Edit</Button>
+            </div>
         {/if}
     </header>
     <div class="main">
         <slot />
     </div>
+{#if mode === "review"}
+    <div class="feedback">
+        {@html feedback.feedbackBody}
+    </div>
+{/if}
 </div>

@@ -1,4 +1,5 @@
 import {QuestionItem} from "../QuestionItem";
+import { QuestionFeedback } from "../QuestionFeedback";
 
 export class MultipleChoiceQuestion extends QuestionItem {
     questionOptions;

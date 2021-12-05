@@ -1,5 +1,6 @@
 <script>
     import Editor from "@tinymce/tinymce-svelte";
+import { select_multiple_value } from "svelte/internal";
     export let option;
     let editorConf = {
 
@@ -21,6 +22,15 @@
                 bind:value="{option.bodyText}"
             >
             </Editor>
+        </div>
+    </div>
+    <div class="formfield">
+        <label for="perecentageValue">Percentage</label>
+        <div class="input-wrapper">
+            <select id="percentageValue" bind:value="{option.percentageValue}">
+                <option name="100" value="1">100%</option>
+                <option name="0" value="0">0%</option>
+            </select>
         </div>
     </div>
 </div>

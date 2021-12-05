@@ -1,10 +1,30 @@
 <script>
     import QuizFrame from "./QuizFrame.svelte";
+    import {QuestionFeedback} from "../../QuestionFeedback";
     import {createEventDispatcher} from "svelte";
     export let questionItem;
-    export let editMode;
+    export let mode = "quiz";
+    export let gradeFeedback;
+    let selectedOption;
 
     let editQuestionItemClicked = createEventDispatcher();
+
+    questionItem.grade = () => {
+        console.log(selectedOption);
+        let totalPercentage = 0;
+        totalPercentage += selectedOption.percentageValue;
+        let pointsEarned = totalPercentage * questionItem.totalPoints;
+        const feedback = new QuestionFeedback(pointsEarned);
+        if(pointsEarned == questionItem.totalPoints) {
+            feedback.feedbackBody = "<p>Question correct!</p>";
+        }
+        else {
+            feedback.feedbackBody = "<p>Question incorrect!</p>";
+        }
+        gradeFeedback = feedback;
+        mode = "review";
+        return feedback;
+    };
     function forwardEditQuestionItemClicked() {
         editQuestionItemClicked("editQuestionItemClicked", questionItem);
     }
@@ -14,6 +34,7 @@
     label {
         display: flex;
         flex-direction: row;
+        margin-top: 5px;
     }
     div {
         display: flex;
@@ -21,13 +42,13 @@
     }
 </style>
 
-<QuizFrame questionType="multipleChoice" questionTypeTitle="Multiple Choice" title="{questionItem.questionName}" editMode={editMode} on:editQuestionItemClicked="{forwardEditQuestionItemClicked}">
+<QuizFrame questionType="multipleChoice" questionTypeTitle="Multiple Choice" {questionItem} bind:mode="{mode}" bind:feedback={gradeFeedback} on:editQuestionItemClicked="{forwardEditQuestionItemClicked}">
     {@html questionItem.bodyText}
     <div>
         {#each questionItem.questionOptions as option}
-            <label for="{questionItem.questionId}-{questionItem.questionOptions.indexOf(option)}">
+            <label for="{option.optionId}">
+                <input id="{option.optionId}" type="radio" name="{questionItem.questionId}" value="{option}" bind:group="{selectedOption}">
                 {@html option.bodyText}
-                <input id="{questionItem.questionId}-{questionItem.questionOptions.indexOf(option)}" type="radio" name="{questionItem.questionId}" value="{option.bodyText}">
             </label>
         {/each}
     </div>
