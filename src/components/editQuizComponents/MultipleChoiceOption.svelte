@@ -1,23 +1,28 @@
 <script>
     import Editor from "@tinymce/tinymce-svelte";
-import { select_multiple_value } from "svelte/internal";
+    import {getTinyMCEKey} from "../../stores/secrets";
     export let option;
     let editorConf = {
-
+        width: "95%"
     }
 </script>
 <style>
-    div {
+    .option {
         background-color: darkgrey;
+        margin-bottom: 20px;
+        padding-top: 20px;
+    }
+    .formfield {
+        margin-left: 10px;
     }
 </style>
 
-<div>
+<div class="option">
     <div class="formfield">
         <label for="questionBody">Body</label>
         <div class="input-wrapper">
             <Editor
-                apiKey="tim2ezjg2v3l7v99lar4byxxp4hcenddb25csn1cpc5o45sz"
+                apiKey="{getTinyMCEKey()}"
                 conf="{editorConf}"
                 bind:value="{option.bodyText}"
             >

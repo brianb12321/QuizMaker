@@ -27,9 +27,10 @@
         border: 1px solid black;
         display: flex;
     }
-    p {
+    h1 {
         height: 100%;
         margin-right: 10px;
+        margin-left: 10px;
         line-height: 40px;
     }
 </style>
@@ -43,7 +44,7 @@
         </select>
         <Button cssClass="green" on:click="{quizItemSelectedHandler}">Add Question</Button>
     {:else}
-        <p>{quiz.name}</p>
+        <h1>{quiz.name}</h1>
         <Button cssClass="red" on:click="{exitQuizClickedHandler}">Exit Quiz</Button>
     {/if}
 </nav>

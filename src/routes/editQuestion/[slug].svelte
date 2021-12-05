@@ -9,13 +9,12 @@
     import MultipleChoiceOption from "../../components/editQuizComponents/MultipleChoiceOption.svelte";
     import {MultipleChoiceQuestionOption} from "../../questionTypes/MutlipleChoiceQuestionOption";
     import {writable} from "svelte/store";
-
     let quiz = $workingQuiz;
     let questionItem = quiz.questionItems.find(item => item.questionId == $page.params.slug);
     let choices = writable(questionItem.questionOptions);
 
     let editorConf = {
-        height: 400,
+        height: 600,
         plugins: "paste image",
         paste_data_images: true
     };
@@ -37,19 +36,18 @@
     }
 </script>
 
-<h1>Editing question type {questionItem.questionType}</h1>
-
 <form>
+    <h1>Editing question type {questionItem.questionType}</h1>
     <div class="formfield">
         <label for="questionName">Question Name</label>
         <div class="input-wrapper">
-          <input id="questionName" class="table-form" bind:value="{questionItem.questionName}"/>
+          <input id="questionName" type="text" bind:value="{questionItem.questionName}"/>
         </div>
     </div>
     <div class="formfield">
-        <label for="totalPoints">Total points</label>
+        <label for="totalPoints">Total Points</label>
         <div class="input-wrapper">
-          <input type="number" id="totalPoints" class="table-form" bind:value="{questionItem.totalPoints}"/>
+          <input type="number" id="totalPoints" bind:value="{questionItem.totalPoints}"/>
         </div>
     </div>
     <div class="formfield">
@@ -66,7 +64,8 @@
     {#each $choices as choice}
         <MultipleChoiceOption option="{choice}"></MultipleChoiceOption>
     {/each}
+    <div class="form-buttons">
+        <Button cssClass="green" on:click={addOptionClicked}>Add Option</Button>
+        <Button cssClass="green" on:click="{questionItemSaved}">Save and Return</Button>
+    </div>
 </form>
-
-<Button cssClass="green" on:click={addOptionClicked}>Add Option</Button>
-<Button cssClass="green" on:click="{questionItemSaved}">Save and Return</Button>

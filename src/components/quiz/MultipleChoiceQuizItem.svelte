@@ -64,6 +64,10 @@
     div {
         display: flex;
         flex-direction: column;
+        margin-top: 15px;
+    }
+    input[type="radio"] {
+        margin-right: 10px;
     }
 </style>
 

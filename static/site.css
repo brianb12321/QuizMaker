@@ -5,8 +5,16 @@
 body {
     width: 100%;
     height: 100%;
+    margin-bottom: 10px;
 }
-
+form {
+    margin-top: 10px;
+    margin-right: 200px;
+    margin-left: 200px;
+}
+form h1 {
+    margin-bottom: 20px;
+}
 .formfield {
     display: table;
     width: 100%;
@@ -18,8 +26,52 @@ body {
     vertical-align: top;
 }
 .formfield label {
-    width: 100px;
+    width: 300px;
 }
-.formfield .input-wrapper .table-form {
+
+input {
+    box-sizing: border-box;
+}
+input[type="text"] {
     width: 100%;
+    height: 30px;
+    padding-left: 20px;
+    border-radius: 3px;
+}
+input[type="number"] {
+    width: 25%;
+}
+select {
+    height: 30px;
+}
+.form-buttons * {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 1222px) {
+    form {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+@media screen and (max-width: 910px) {
+    form {
+        margin-left: 10px;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .formfield {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-buttons * {
+        margin-bottom: 5px;
+        width: 100%;
+    }
 }

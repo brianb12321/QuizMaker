@@ -42,8 +42,8 @@
         box-shadow: 2px 2px 2px;
         margin: auto;
         width: 50%;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         overflow-x: scroll;
     }
     .header-title {

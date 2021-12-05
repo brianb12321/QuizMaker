@@ -4,10 +4,14 @@
     import { Quiz } from "../Quiz";
     import {v4 as uuid} from "uuid";
     import {goto} from "$app/navigation";
-
+    import Editor from "@tinymce/tinymce-svelte";
+    import {getTinyMCEKey} from "../stores/secrets";
     let quizName = "";
     let quizDescription = "";
 
+    let conf = {
+      height: "300"
+    };
     function createQuiz() {
         const newGuid = uuid();
         if(addQuiz(new Quiz(newGuid, quizName, quizDescription, []))) {
@@ -17,20 +21,19 @@
     }
 </script>
 
-<h1>Create Quiz</h1>
-
 <form>
+    <h1>Create Quiz</h1>
     <div class="formfield">
         <label for="quizName">Quiz Name</label>
         <div class="input-wrapper">
-          <input id="quizName" class="table-form" bind:value="{quizName}"/>
+          <input type="text" id="quizName" bind:value="{quizName}"/>
         </div>
       </div>
       <div class="formfield">
         <label for="quizDescription">Description</label>
         <div class="input-wrapper">
-          <textarea id="quizDescription" rows="3" class="table-form" bind:value="{quizDescription}"></textarea>
+          <Editor id="quizDescription" {conf} apiKey="{getTinyMCEKey()}" rows="3" bind:value="{quizDescription}"></Editor>
         </div>
       </div>
+      <Button cssClass="blue" on:click="{createQuiz}">Create Quiz</Button>
 </form>
-<Button cssClass="blue" on:click="{createQuiz}">Create Quiz</Button>

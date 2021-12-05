@@ -9,7 +9,12 @@
 </script>
 <style>
     button {
-        padding: 5px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+    }
+    button:hover {
+        background-color: gray;
     }
     .red {
         background-color: red;
@@ -35,7 +40,7 @@
     </button>
 </a>
 {:else}
-<button class="{cssClass}" on:click="{buttonedClicked}">
+<button class="{cssClass}" on:click|preventDefault="{buttonedClicked}">
     <slot />
 </button>
 {/if}
