@@ -9,6 +9,21 @@
 
     let editQuestionItemClicked = createEventDispatcher();
 
+    questionItem.readSession = (session, state) => {
+        if(state != undefined) {
+            selectedOption = questionItem.questionOptions.find(option => option.optionId == state.selectedOptionId);   
+        }
+        if(state.gradeFeedback != undefined) {
+            gradeFeedback = state.gradeFeedback;
+            mode = "review";
+        }
+    };
+    questionItem.writeToSession = (state) => {
+        state.selectedOptionId = selectedOption.optionId;
+        if(gradeFeedback != undefined) {
+            state.gradeFeedback = gradeFeedback;
+        }
+    };
     questionItem.grade = () => {
         console.log(selectedOption);
         let totalPercentage = 0;

@@ -5,6 +5,7 @@
 
     export const quizItemSelected = createEventDispatcher();
     export const saveButtonClicked = createEventDispatcher();
+    export const exitQuizClicked = createEventDispatcher();
     let currentQuizItemSelection;
     export let quiz;
     export let editMode;
@@ -15,10 +16,8 @@
     function saveButtonClickedHandler() {
         saveButtonClicked("saveButtonClicked");
     }
-    function exitQuiz() {
-        if(confirm("Are you sure you want to exit the quiz?")) {
-            goto("/quizSummary/" + quiz.quizId);
-        }
+    function exitQuizClickedHandler() {
+        exitQuizClicked("exitQuizClicked");
     }
 </script>
 
@@ -40,6 +39,6 @@
         <Button cssClass="green" on:click="{quizItemSelectedHandler}">Add Question</Button>
     {:else}
         <p>{quiz.name}</p>
-        <Button cssClass="red" on:click="{exitQuiz}">Exit Quiz</Button>
+        <Button cssClass="red" on:click="{exitQuizClickedHandler}">Exit Quiz</Button>
     {/if}
 </nav>

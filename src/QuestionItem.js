@@ -4,6 +4,8 @@ export class QuestionItem {
     questionName;
     totalPoints;
     bodyText;
+    readSession;
+    writeToSession;
     grade;
 
     constructor(questionId, questionType, questionName) {
@@ -13,5 +15,7 @@ export class QuestionItem {
         this.totalPoints = 0;
         this.bodyText = "";
         this.grade = () => {return undefined};
+        this.readSession = (session, state) => {};
+        this.writeToSession = (state) => {};
     }
 }
