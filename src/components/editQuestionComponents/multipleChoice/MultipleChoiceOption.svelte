@@ -41,7 +41,7 @@
     <div class="formfield">
         <label for="perecentageValue">Percentage</label>
         <div class="input-wrapper">
-            <select id="percentageValue" bind:value="{option.percentageValue}">
+            <select id="percentageValue" bind:value="{option.percentageValue}" required>
                 <option name="100" value="1">100%</option>
                 <option name="0" value="0">0%</option>
             </select>

@@ -44,13 +44,13 @@
     <div class="formfield">
         <label for="questionName">Question Name</label>
         <div class="input-wrapper">
-          <input id="questionName" type="text" bind:value="{questionItem.questionName}"/>
+          <input id="questionName" type="text" bind:value="{questionItem.questionName}" required/>
         </div>
     </div>
     <div class="formfield">
         <label for="totalPoints">Total Points</label>
         <div class="input-wrapper">
-          <input type="number" id="totalPoints" bind:value="{questionItem.totalPoints}"/>
+          <input type="number" id="totalPoints" bind:value="{questionItem.totalPoints}" required/>
         </div>
     </div>
     <div class="formfield">

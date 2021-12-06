@@ -24,7 +24,7 @@
     <div class="formfield">
         <label for="questionName">Name</label>
         <div class="input-wrapper">
-          <input id="questionName" type="text" bind:value="{questionItem.questionName}"/>
+          <input id="questionName" type="text" bind:value="{questionItem.questionName}" required/>
         </div>
     </div>
     <div class="formfield">

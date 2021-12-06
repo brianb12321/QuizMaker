@@ -58,7 +58,6 @@
 
     function submitQuiz() {
         gradeReport = quiz.grade();
-        console.log(gradeReport);
         alert("Quiz Graded");
     }
     function exitAndDestroySession() {
