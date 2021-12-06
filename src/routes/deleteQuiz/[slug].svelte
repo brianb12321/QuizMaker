@@ -3,10 +3,18 @@
     import {page} from "$app/stores";
     import {deleteQuiz} from "../../stores/quizStores";
     import {goto} from "$app/navigation";
+    import {quizSessions} from "../../stores/quizSessions";
     let quizId = $page.params.slug;
 
     function deleteQuizClicked() {
         if(deleteQuiz(quizId)) {
+            if($quizSessions.find(session => session.quizId == quizId)) {
+                quizSessions.update(sessions => {
+                    sessions.splice(sessions.findIndex(session => session.quizId == quizId), 1);
+                    sessionStorage.setItem("quizSessions", JSON.stringify(sessions));
+                    return sessions;
+                });
+            }
             alert("Quiz deleted");
             goto("/quizzes");
         }

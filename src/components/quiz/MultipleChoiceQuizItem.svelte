@@ -57,6 +57,7 @@
             }
             gradeFeedback = feedback;
             mode = "review";
+            disabled = true;
             return feedback;
         };
     }
@@ -84,7 +85,8 @@
 <QuizFrame
     questionType="multipleChoice"
     questionTypeTitle="Multiple Choice"
-    {questionItem} bind:mode="{mode}"
+    {questionItem}
+    bind:mode="{mode}"
     bind:feedback={gradeFeedback}
     on:editQuestionItemClicked="{forwardEditQuestionItemClicked}"
     on:questionUpClicked={forwardQuestionUpClicked}
