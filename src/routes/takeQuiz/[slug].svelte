@@ -8,6 +8,7 @@
     import TextQuizItem from "../../components/quiz/TextQuizItem.svelte";
     import { onMount } from "svelte";
     import {goto} from "$app/navigation";
+    import {getEarnedMarks, getTotalMarks} from "../../GradeReport";
 
     let quizSession = $quizSessions.find(session => session.sessionId == $page.params.slug);
 
@@ -93,6 +94,12 @@
         margin: auto;
         width: 50%;
     }
+    .grade-report {
+        width: 50%;
+        margin: auto;
+        text-align: right;
+        padding-bottom: 5px;
+    }
 </style>
 
 <QuizNavigationBar {quiz} on:exitQuizClicked={exitQuiz}></QuizNavigationBar>
@@ -105,6 +112,12 @@
         mode="quiz"
     ></svelte:component>
 {/each}
+
+{#if gradeReport != undefined}
+<div class="grade-report">
+    <p>Total score: {getEarnedMarks(gradeReport)} / {getTotalMarks(gradeReport)}</p>
+</div>
+{/if}
 
 <div>
     {#if gradeReport == undefined}

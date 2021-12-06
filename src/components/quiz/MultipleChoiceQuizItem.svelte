@@ -48,7 +48,7 @@
                 totalPercentage += selectedOption.percentageValue;
             }
             let pointsEarned = totalPercentage * questionItem.totalPoints;
-            const feedback = new QuestionFeedback(pointsEarned);
+            const feedback = new QuestionFeedback(pointsEarned, questionItem.totalPoints);
             if(pointsEarned == questionItem.totalPoints) {
                 feedback.feedbackBody = "<p>Question correct!</p>";
             }
