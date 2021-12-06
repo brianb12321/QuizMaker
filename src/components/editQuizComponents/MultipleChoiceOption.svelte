@@ -1,9 +1,18 @@
 <script>
     import Editor from "@tinymce/tinymce-svelte";
     import {getTinyMCEKey} from "../../stores/secrets";
+    import Button from "../Button.svelte";
+    import {createEventDispatcher} from "svelte";
+
     export let option;
+    let deleteBUttonClicked = createEventDispatcher();
+
     let editorConf = {
         width: "95%"
+    }
+
+    function forwardDeleteButtonClicked() {
+        deleteBUttonClicked("deleteButtonClicked", option);
     }
 </script>
 <style>
@@ -36,6 +45,12 @@
                 <option name="100" value="1">100%</option>
                 <option name="0" value="0">0%</option>
             </select>
+        </div>
+    </div>
+    <div class="formfield">
+        <label for="deleteButton">Delete</label>
+        <div class="input-wrapper">
+            <Button id="deleteButton" cssClass="red" on:click={forwardDeleteButtonClicked}>Delete</Button>
         </div>
     </div>
 </div>
