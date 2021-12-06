@@ -6,11 +6,23 @@
     export let questionTypeTitle = "";
     export let questionItem;
     export let mode;
-    export let editQuestionItemClicked = createEventDispatcher();
+    let editQuestionItemClicked = createEventDispatcher();
+    let questionUpClicked = createEventDispatcher();
+    let questionDownClicked = createEventDispatcher();
+    let questionDeleteClicked = createEventDispatcher();
     export let feedback;
 
     function forwardEditQuestionItemClicked() {
-        editQuestionItemClicked("editQuestionItemClicked");
+        editQuestionItemClicked("editQuestionItemClicked", questionItem);
+    }
+    function forwardQuestionUpClicked() {
+        questionUpClicked("questionUpClicked", questionItem);
+    }
+    function forwardQuestionDownClicked() {
+        questionDownClicked("questionDownClicked", questionItem);
+    }
+    function forwardQuestionDeleteClicked() {
+        questionDeleteClicked("questionDeleteClicked", questionItem);
     }
 </script>
 
@@ -76,6 +88,9 @@
         margin: 10px;
         background-color: antiquewhite;
     }
+    .question-controls {
+        margin: 10px;
+    }
 
     @media screen and (max-width: 692px) {
         header {
@@ -112,6 +127,13 @@
             </div>
         {/if}
     </header>
+    {#if mode == "edit"}
+        <div class="question-controls">
+            <Button cssClass="green" on:click={forwardQuestionUpClicked}>^</Button>
+            <Button cssClass="green" on:click={forwardQuestionDownClicked}>v</Button>
+            <Button cssClass="red" on:click={forwardQuestionDeleteClicked}>Delete</Button>
+        </div>
+    {/if}
     <div class="main">
         <slot />
     </div>

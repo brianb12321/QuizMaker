@@ -8,6 +8,7 @@
     import MultipleChoiceQuizItem from "../../components/quiz/MultipleChoiceQuizItem.svelte";
     import {writable} from "svelte/store";
     import {quizSessions} from "../../stores/quizSessions";
+    import {arrayMoveMutable} from "array-move";
 
     let editMode = true;
     let quiz = getQuiz($page.params.slug);
@@ -54,10 +55,37 @@
     function exitEditQuiz() {
         goto("/quizzes");
     }
+
+    function updateQuestionPosition(index, offset) {
+        arrayMoveMutable(quiz.questionItems, index, offset);
+        questionItems.update(items => {
+            arrayMoveMutable(items, index, offset);
+            return items;
+        });
+    }
+
+    function questionMoveUp(event) {
+        const index = quiz.questionItems.findIndex(item => item.questionId == event.detail.questionId);
+        updateQuestionPosition(index, index - 1);
+    }
+    function questionMoveDown(event) {
+        const index = quiz.questionItems.findIndex(item => item.questionId == event.detail.questionId);
+        updateQuestionPosition(index, index + 1);
+    }
+    function questionDelete(event) {
+        if(confirm("Are you sure you want to delete this question?")) {
+            const index = quiz.questionItems.findIndex(item => item.questionId == event.detail.questionId);
+            quiz.questionItems.splice(index, 1);
+            questionItems.update(items => {
+                items.splice(index, 1);
+                return items;
+            });
+        }
+    }
 </script>
 
 <style>
-    div {
+    .warning-banner {
         width: 100%;
         background-color: antiquewhite;
     }
@@ -65,7 +93,7 @@
 
 <QuizNavigationBar {quiz} on:saveButtonClicked="{saveButtonClicked}" on:quizItemSelected="{quizItemAdded}" {editMode} on:exitQuizClicked={exitEditQuiz}></QuizNavigationBar>
 {#if !editMode}
-    <div>
+    <div class="warning-banner">
         <p>A session is currently open for this quiz. Editing has been disabled</p>
     </div>
 {/if}
@@ -74,6 +102,9 @@
         this={questionItem.component}
         questionItem={questionItem.questionItem}
         on:editQuestionItemClicked={editQuizItemClicked}
+        on:questionUpClicked={questionMoveUp}
+        on:questionDownClicked={questionMoveDown}
+        on:questionDeleteClicked={questionDelete}
         mode="{editMode ? "edit" : "readOnly"}"
     ></svelte:component>
 {/each}

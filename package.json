@@ -17,6 +17,7 @@
   "type": "module",
   "dependencies": {
     "@tinymce/tinymce-svelte": "^0.1.1",
+    "array-move": "^4.0.0",
     "tinymce": "^5.10.2",
     "uuid": "^8.3.2"
   }

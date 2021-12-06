@@ -26,6 +26,7 @@
         width: 100%;
         border: 1px solid black;
         display: flex;
+        margin-bottom: 10px;
     }
     h1 {
         height: 100%;

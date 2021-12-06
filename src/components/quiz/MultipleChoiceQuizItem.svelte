@@ -9,6 +9,19 @@
     let selectedOption;
 
     let editQuestionItemClicked = createEventDispatcher();
+    let questionUpClicked = createEventDispatcher();
+    let questionDownClicked = createEventDispatcher();
+    let questionDeleteClicked = createEventDispatcher();
+
+    function forwardQuestionUpClicked(event) {
+        questionUpClicked("questionUpClicked", event.detail);
+    }
+    function forwardQuestionDownClicked(event) {
+        questionDownClicked("questionDownClicked", event.detail);
+    }
+    function forwardQuestionDeleteClicked(event) {
+        questionDeleteClicked("questionDeleteClicked", event.detail);
+    }
 
     if(mode != "edit" || mode != "readOnly") {
         questionItem.readSession = (session, state) => {
@@ -71,7 +84,16 @@
     }
 </style>
 
-<QuizFrame questionType="multipleChoice" questionTypeTitle="Multiple Choice" {questionItem} bind:mode="{mode}" bind:feedback={gradeFeedback} on:editQuestionItemClicked="{forwardEditQuestionItemClicked}">
+<QuizFrame
+    questionType="multipleChoice"
+    questionTypeTitle="Multiple Choice"
+    {questionItem} bind:mode="{mode}"
+    bind:feedback={gradeFeedback}
+    on:editQuestionItemClicked="{forwardEditQuestionItemClicked}"
+    on:questionUpClicked={forwardQuestionUpClicked}
+    on:questionDownClicked={forwardQuestionDownClicked}
+    on:questionDeleteClicked={forwardQuestionDeleteClicked}
+    >
     {@html questionItem.bodyText}
     <div>
         {#each questionItem.questionOptions as option}
