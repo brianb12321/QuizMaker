@@ -26,8 +26,10 @@
     }
 </script>
 
-<h1>Quiz - {quiz.name}</h1>
+<main class="margin">
+    <h1>Quiz - {quiz.name}</h1>
 
-<h2>Instructions</h2>
-<p>When ready, click the take quiz button. A quiz session will be generated for you.</p>
-<Button on:click="{takeQuiz}" cssClass="blue">{quizSession == undefined ? "Take Quiz" : "Resume Quiz"}</Button>
+    <h2>Instructions</h2>
+    <p>When ready, click the take quiz button. A quiz session will be generated for you.</p>
+    <Button on:click="{takeQuiz}" cssClass="blue">{quizSession == undefined ? "Take Quiz" : "Resume Quiz"}</Button>
+</main>

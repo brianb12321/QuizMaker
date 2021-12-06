@@ -28,6 +28,5 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/quizzes">Quizzes</a></li>
-        <li><a href="/administration">Administration</a></li>
     </ul>
 </nav>

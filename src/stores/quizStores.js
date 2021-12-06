@@ -36,6 +36,17 @@ export function addQuiz(quiz) {
     }
     return false;
 }
+export function deleteQuiz(quizId) {
+    if(browser) {
+        const quizzes = JSON.parse(window.localStorage.getItem("quizzes"));
+        const quizIndex = quizzes.findIndex(quiz => quiz.quizId == quizId);
+        quizzes.splice(quizIndex, 1);
+        window.localStorage.setItem("quizzes", JSON.stringify(quizzes, ignoreFeedbackInformation));
+        return true;
+    }
+    return false;
+}
+
 export const quizEnumeration = readable([], set => {
     //Get data from browser storage.
     if(browser) {
