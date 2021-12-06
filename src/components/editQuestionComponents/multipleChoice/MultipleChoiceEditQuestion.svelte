@@ -1,11 +1,11 @@
 <script>
     import Editor from "@tinymce/tinymce-svelte";
-    import {getTinyMCEKey} from "../../stores/secrets";
+    import {getTinyMCEKey} from "../../../stores/secrets";
     import {writable} from "svelte/store";
     import {createEventDispatcher} from "svelte";
-    import Button from "../Button.svelte";
-    import MultipleChoiceOption from "../editQuizComponents/MultipleChoiceOption.svelte";
-    import {MultipleChoiceQuestionOption} from "../../questionTypes/MutlipleChoiceQuestionOption";
+    import Button from "../../Button.svelte";
+    import MultipleChoiceOption from "./MultipleChoiceOption.svelte";
+    import {MultipleChoiceQuestionOption} from "../../../questionTypes/MutlipleChoiceQuestionOption";
     import {v4 as uuid} from "uuid";
 
     export let questionItem;

@@ -1,11 +1,13 @@
 <script>
     import {MultipleChoiceQuestion} from "../../questionTypes/MultipleChoiceQuestion";
+    import {TextQuestion} from "../../questionTypes/TextQuestion";
     import QuizNavigationBar from "../../components/editQuizComponents/QuizNavigationBar.svelte";
     import {page} from "$app/stores";
     import {goto} from "$app/navigation";
     import {v4 as uuid} from "uuid";
     import {getQuiz, saveQuiz, workingQuiz} from "../../stores/quizStores";
     import MultipleChoiceQuizItem from "../../components/quiz/MultipleChoiceQuizItem.svelte";
+    import TextQuizItem from "../../components/quiz/TextQuizItem.svelte";
     import {writable} from "svelte/store";
     import {quizSessions} from "../../stores/quizSessions";
     import {arrayMoveMutable} from "array-move";
@@ -27,6 +29,12 @@
                     questionItem: questionItem
                 });
             }
+            if(questionItem.questionType == "text") {
+                items.push({
+                    component: TextQuizItem,
+                    questionItem: questionItem
+                });
+            }
         }
         return items;
     });
@@ -38,6 +46,17 @@
             questionItems.update(items => {
                 items.push({
                     component: MultipleChoiceQuizItem,
+                    questionItem: item
+                });
+                return items;
+            });
+        }
+        if(event.detail == "text") {
+            let item = new TextQuestion(uuid(), "Question");
+            quiz.questionItems.push(item);
+            questionItems.update(items => {
+                items.push({
+                    component: TextQuizItem,
                     questionItem: item
                 });
                 return items;

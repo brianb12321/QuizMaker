@@ -8,19 +8,16 @@
     let disabled;
     let selectedOption;
 
-    let editQuestionItemClicked = createEventDispatcher();
-    let questionUpClicked = createEventDispatcher();
-    let questionDownClicked = createEventDispatcher();
-    let questionDeleteClicked = createEventDispatcher();
+    let dispatcher = createEventDispatcher();
 
     function forwardQuestionUpClicked(event) {
-        questionUpClicked("questionUpClicked", event.detail);
+        dispatcher("questionUpClicked", event.detail);
     }
     function forwardQuestionDownClicked(event) {
-        questionDownClicked("questionDownClicked", event.detail);
+        dispatcher("questionDownClicked", event.detail);
     }
     function forwardQuestionDeleteClicked(event) {
-        questionDeleteClicked("questionDeleteClicked", event.detail);
+        dispatcher("questionDeleteClicked", event.detail);
     }
 
     if(mode != "edit" || mode != "readOnly") {
@@ -64,7 +61,7 @@
         };
     }
     function forwardEditQuestionItemClicked() {
-        editQuestionItemClicked("editQuestionItemClicked", questionItem);
+        dispatcher("editQuestionItemClicked", questionItem);
     }
 </script>
 

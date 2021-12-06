@@ -5,6 +5,7 @@
     import QuizNavigationBar from "../../components/editQuizComponents/QuizNavigationBar.svelte";
     import Button from "../../components/Button.svelte";
     import MultipleChoiceQuizItem from "../../components/quiz/MultipleChoiceQuizItem.svelte";
+    import TextQuizItem from "../../components/quiz/TextQuizItem.svelte";
     import { onMount } from "svelte";
     import {goto} from "$app/navigation";
 
@@ -36,6 +37,12 @@
             case "multipleChoice":
                 questionItems.push({
                     component: MultipleChoiceQuizItem,
+                    questionItem: questionItem
+                });
+                break;
+            case "text":
+                questionItems.push({
+                    component: TextQuizItem,
                     questionItem: questionItem
                 });
                 break;

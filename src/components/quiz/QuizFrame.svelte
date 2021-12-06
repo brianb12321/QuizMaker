@@ -6,23 +6,20 @@
     export let questionTypeTitle = "";
     export let questionItem;
     export let mode;
-    let editQuestionItemClicked = createEventDispatcher();
-    let questionUpClicked = createEventDispatcher();
-    let questionDownClicked = createEventDispatcher();
-    let questionDeleteClicked = createEventDispatcher();
+    let dispatcher = createEventDispatcher();
     export let feedback;
 
     function forwardEditQuestionItemClicked() {
-        editQuestionItemClicked("editQuestionItemClicked", questionItem);
+        dispatcher("editQuestionItemClicked", questionItem);
     }
     function forwardQuestionUpClicked() {
-        questionUpClicked("questionUpClicked", questionItem);
+        dispatcher("questionUpClicked", questionItem);
     }
     function forwardQuestionDownClicked() {
-        questionDownClicked("questionDownClicked", questionItem);
+        dispatcher("questionDownClicked", questionItem);
     }
     function forwardQuestionDeleteClicked() {
-        questionDeleteClicked("questionDeleteClicked", questionItem);
+        dispatcher("questionDeleteClicked", questionItem);
     }
 </script>
 
@@ -79,6 +76,9 @@
     .legend-multipleChoice {
         background-color: orange;
     }
+    .legend-text {
+        background-color: blue;
+    }
 
     .main {
         margin: 10px;
@@ -110,16 +110,18 @@
             <div class="header-title">
                 <h2>{questionItem.questionName}</h2>
             </div>
-            <div class="header-grade">
-                <p>
-                    {#if mode === "review"}
-                    {feedback.earnedMarks}
-                    {:else}
-                    __
-                    {/if}
-                     / {questionItem.totalPoints}
-                </p>
-            </div>
+            {#if questionItem.ungraded != true}
+                <div class="header-grade">
+                    <p>
+                        {#if mode === "review"}
+                        {feedback.earnedMarks}
+                        {:else}
+                        __
+                        {/if}
+                        / {questionItem.totalPoints}
+                    </p>
+                </div>
+            {/if}
         </div>
         {#if mode === "edit"}
             <div class="header-edit">

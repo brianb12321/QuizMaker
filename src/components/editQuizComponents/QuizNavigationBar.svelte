@@ -1,23 +1,21 @@
 <script>
     import Button from "../Button.svelte";
-    import {goto} from "$app/navigation";
     import { createEventDispatcher } from "svelte";
 
-    export const quizItemSelected = createEventDispatcher();
-    export const saveButtonClicked = createEventDispatcher();
-    export const exitQuizClicked = createEventDispatcher();
+    export const dispatcher = createEventDispatcher();
+
     let currentQuizItemSelection;
     export let quiz;
     export let editMode;
 
     function quizItemSelectedHandler() {
-        quizItemSelected("quizItemSelected", currentQuizItemSelection);
+        dispatcher("quizItemSelected", currentQuizItemSelection);
     }
     function saveButtonClickedHandler() {
-        saveButtonClicked("saveButtonClicked");
+        dispatcher("saveButtonClicked");
     }
     function exitQuizClickedHandler() {
-        exitQuizClicked("exitQuizClicked");
+        dispatcher("exitQuizClicked");
     }
 </script>
 
@@ -42,6 +40,7 @@
         <Button cssClass="green" on:click="{saveButtonClickedHandler}">Save</Button>
         <select bind:value="{currentQuizItemSelection}">
             <option value="multipleChoice">Multiple Choice</option>
+            <option value="text">Text</option>
         </select>
         <Button cssClass="green" on:click="{quizItemSelectedHandler}">Add Question</Button>
     {:else}

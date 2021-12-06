@@ -1,7 +1,7 @@
 <script>
     import Editor from "@tinymce/tinymce-svelte";
-    import {getTinyMCEKey} from "../../stores/secrets";
-    import Button from "../Button.svelte";
+    import {getTinyMCEKey} from "../../../stores/secrets";
+    import Button from "../../Button.svelte";
     import {createEventDispatcher} from "svelte";
 
     export let option;

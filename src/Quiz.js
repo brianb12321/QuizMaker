@@ -14,9 +14,11 @@ export class Quiz {
     }
     grade() {
         const gradeReport = new GradeReport();
-        for(let item of this.questionItems) {
+        for(let item of this.questionItems.filter(item => item.ungraded != true)) {
             const feedback = item.grade();
-            gradeReport.questionFeedback.push(feedback);
+            if(feedback != undefined) {
+                gradeReport.questionFeedback.push(feedback);
+            }
         }
         return gradeReport;
     }

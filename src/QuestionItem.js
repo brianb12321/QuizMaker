@@ -4,6 +4,7 @@ export class QuestionItem {
     questionName;
     totalPoints;
     bodyText;
+    ungraded;
     readSession;
     writeToSession;
     grade;
@@ -14,6 +15,7 @@ export class QuestionItem {
         this.questionName = questionName;
         this.totalPoints = 0;
         this.bodyText = "";
+        this.ungraded = false;
         this.grade = () => {return undefined};
         this.readSession = (session, state) => {};
         this.writeToSession = (state) => {};
